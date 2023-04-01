@@ -1,5 +1,6 @@
 package com.prprv.monitor;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import java.util.Objects;
  */
 public class IpAddressUtil {
     private static final Logger log = LoggerFactory.getLogger(IpAddressUtil.class);
-    public static String getInfo(String ip) {
+    public static String getAddr(String ip) {
         // 读取 ip2region.db 文件路径
         String dbPath = Objects.requireNonNull(IpAddressUtil.class.getClassLoader().getResource("ip2region.xdb")).getPath();
 
@@ -55,5 +56,21 @@ public class IpAddressUtil {
         }
         // 备注：每个线程需要单独创建一个独立的 Searcher 对象，但是都共享全局的制度 vIndex 缓存。
         return null;
+    }
+
+    private static final String UNKNOWN = "unknown";
+
+    public static String getIp(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 }

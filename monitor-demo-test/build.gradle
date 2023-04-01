@@ -9,11 +9,12 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
+    mavenLocal()
     maven { url 'https://maven.aliyun.com/repository/public/' }
 }
 
 dependencies {
-    implementation project(':monitor-spring-boot-starter')
+    implementation 'com.prprv:addr-spring-boot-starter:0.0.1-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

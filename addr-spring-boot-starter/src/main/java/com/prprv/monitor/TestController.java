@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class TestController {
-    @IpAddr
+    @Ip
     @GetMapping("/test")
-    public void test() {
+    public String test() {
         System.out.println("test");
+        return "test";
     }
 }
