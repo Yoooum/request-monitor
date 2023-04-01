@@ -14,7 +14,7 @@ import java.util.Objects;
 public class IpAddressUtil {
     private static final Logger log = LoggerFactory.getLogger(IpAddressUtil.class);
     public static String getInfo(String ip) {
-        // 读取 ip2region.db 文件，使用 springboot 工具类读取
+        // 读取 ip2region.db 文件路径
         String dbPath = Objects.requireNonNull(IpAddressUtil.class.getClassLoader().getResource("ip2region.xdb")).getPath();
 
         // 1、从 dbPath 中预先加载 VectorIndex 缓存，并且把这个得到的数据作为全局变量，后续反复使用。
