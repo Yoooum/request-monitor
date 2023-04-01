@@ -1,8 +1,6 @@
 ## 启动
-引入依赖
-```groovy
-implementation project(':monitor-spring-boot-starter')
-```
+引入依赖  
+
 在 resources 目录添加 ip2region.xdb IP数据库文件
 
 配置文件开启访问IP地址监控
